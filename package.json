@@ -1,6 +1,6 @@
 {
-  "name": "react-native-month",
-  "version": "1.5.2",
+  "name": "react-native-month-linologi",
+  "version": "1.5.3",
   "description": "React Native Month",
   "main": "lib/commonjs/index.js",
   "react-native": "src/index.tsx",
@@ -21,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/maggialejandro/react-native-month.git"
+    "url": "git+https://github.com/Omurlan/react-native-month"
   },
   "keywords": [
     "react-native",
@@ -68,11 +68,6 @@
     "presets": [
       "module:metro-react-native-babel-preset"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn lint && yarn typescript && yarn test"
-    }
   },
   "jest": {
     "preset": "react-native",

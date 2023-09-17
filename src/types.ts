@@ -23,6 +23,8 @@ export interface DayTheme {
   weekendTextStyle?: TextStyle;
   todayContainerStyle?: ViewStyle;
   todayTextStyle?: TextStyle;
+  startDateTextStyle?: TextStyle;
+  endDateTextStyle?: TextStyle;
 }
 
 export interface DotTheme {

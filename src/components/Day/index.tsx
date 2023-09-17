@@ -1,19 +1,15 @@
 import React, { ReactElement, useCallback, useMemo } from 'react';
-import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Pressable } from 'react-native';
 import { DayType, ThemeType, DayDot, DayTheme } from '../../types';
 import Dot from '../Dot';
 
 const styles = StyleSheet.create({
-  activeDate: {
-    backgroundColor: '#3b5998',
-  },
   container: {
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'white',
-    flex: 1,
-    marginVertical: 5,
-    paddingVertical: 10,
+    width: 40,
+    height: 40,
   },
   content: {
     alignItems: 'center',
@@ -21,12 +17,10 @@ const styles = StyleSheet.create({
   },
   dotsContainer: { position: 'absolute', bottom: -5, flexDirection: 'row' },
   endDate: {
-    borderBottomRightRadius: 60,
-    borderTopRightRadius: 60,
+    borderRadius: 20,
   },
   startDate: {
-    borderBottomLeftRadius: 60,
-    borderTopLeftRadius: 60,
+    borderRadius: 20,
   },
   nonTouchableDayText: { color: '#d3d3d3' },
 });
@@ -72,7 +66,6 @@ const NonTouchableDay = React.memo<NonTouchableDayProps>(
           isWeekend ? dayTheme?.weekendContainerStyle : {},
           isToday && !isActive ? theme.todayContainerStyle : {},
           isToday && !isActive ? dayTheme?.todayContainerStyle : {},
-          isActive ? styles.activeDate : {},
           isActive ? theme.activeDayContainerStyle : {},
           isActive ? dayTheme?.activeDayContainerStyle : {},
           isOutOfRange ? theme.dayOutOfRangeContainerStyle : {},
@@ -202,7 +195,7 @@ const Day = React.memo<Props>(
     const finalDots = dots.slice(0, 3);
 
     return (
-      <TouchableOpacity
+      <Pressable
         testID="day-pressable"
         style={[
           styles.container,
@@ -212,7 +205,6 @@ const Day = React.memo<Props>(
           isWeekend ? dayTheme?.weekendContainerStyle : {},
           isToday && !isActive ? theme.todayContainerStyle : {},
           dayTheme && !isActive ? dayTheme.todayContainerStyle : {},
-          isActive ? styles.activeDate : {},
           isActive ? theme.activeDayContainerStyle : {},
           isActive ? dayTheme?.activeDayContainerStyle : {},
           isStartDate ? styles.startDate : {},
@@ -248,6 +240,8 @@ const Day = React.memo<Props>(
                 isToday ? dayTheme?.todayTextStyle : {},
                 isActive ? theme.activeDayTextStyle : {},
                 isActive ? dayTheme?.activeDayTextStyle : {},
+                isStartDate ? theme.startDateTextStyle : {},
+                isEndDate ? theme.endDateTextStyle : {},
               ]}
             >
               {date.getDate()}
@@ -255,7 +249,7 @@ const Day = React.memo<Props>(
             <View style={styles.dotsContainer}>{finalDots.map(renderDot)}</View>
           </View>
         )}
-      </TouchableOpacity>
+      </Pressable>
     );
   },
   (prevProps, nextProps) => {

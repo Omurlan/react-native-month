@@ -11,7 +11,7 @@ interface WeekColumnProps {
 
 const styles = StyleSheet.create({
   weekColumnContainer: {
-    flex: 1,
+    width: 40,
     alignItems: 'center',
   },
   weekDaysContainer: {

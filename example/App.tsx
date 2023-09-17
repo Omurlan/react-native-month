@@ -1,86 +1,102 @@
 import React, { useCallback, useState } from 'react';
 import { View, StatusBar, SafeAreaView } from 'react-native';
 import { Month, ThemeType, MarkedDays } from 'react-native-month';
-
-const BLUE = '#6d95da';
+import { newTypographyStyle } from './newTypographyStyle';
+import { spacing } from './spacing';
+import { colors } from './colors';
 
 const THEME: ThemeType = {
-  weekColumnsContainerStyle: {},
-  weekColumnStyle: {
-    paddingVertical: 10,
+  weekColumnsContainerStyle: {
+    paddingBottom: spacing.xxs,
   },
-  weekColumnTextStyle: {
-    color: '#b6c1cd',
-    fontSize: 13,
-  },
-  nonTouchableDayContainerStyle: {},
-  nonTouchableDayTextStyle: {},
-  startDateContainerStyle: {},
-  endDateContainerStyle: {},
+
   dayContainerStyle: {
-    marginVertical: 0,
-    backgroundColor: 'transparent',
+    marginVertical: 6,
+    marginHorizontal: 5,
   },
-  dayContentStyle: {
-    width: 36,
-    height: 36,
+
+  weekColumnStyle: {
+    marginHorizontal: 5,
   },
-  activeDayContentStyle: {
-    backgroundColor: '#1890FF',
-    borderRadius: 18,
-    alignItems: 'center',
-    justifyContent: 'center',
+
+  weekColumnTextStyle: {
+    ...newTypographyStyle.text2,
+    color: colors.basic.secondary,
   },
-  activeDayTextStyle: {
-    color: 'white',
+
+  startDateContainerStyle: {
+    backgroundColor: colors.brand.surface,
   },
-  dayTextStyle: {
-    color: '#2d4150',
-    fontWeight: '200',
-    fontSize: 15,
+
+  startDateTextStyle: {
+    color: colors.basic.inverse,
   },
-  dayOutOfRangeContainerStyle: {},
-  dayOutOfRangeTextStyle: {},
-  weekendContainerStyle: {
-    backgroundColor: 'rgb(249,250,252)',
+
+  endDateContainerStyle: {
+    backgroundColor: colors.brand.surface,
   },
-  todayContainerStyle: {},
-  todayTextStyle: {
-    color: BLUE,
+
+  endDateTextStyle: {
+    color: colors.basic.inverse,
   },
+
   activeDayContainerStyle: {
-    backgroundColor: 'transparent',
+    backgroundColor: colors.background.primary,
   },
-  nonTouchableLastMonthDayTextStyle: {},
+
+  todayTextStyle: {
+    color: colors.brand.surface,
+  },
+
+  dayTextStyle: {
+    color: colors.basic.primary,
+    ...newTypographyStyle.text,
+  },
+
+  activeDayTextStyle: {
+    color: colors.basic.primary,
+  },
 };
 
 const truthyValue = true;
 
 const DISABLED_DAYS = {
-  '2020-03-20': truthyValue,
-  '2020-03-10': truthyValue,
+  '2020-10-20': truthyValue,
+  '2020-10-10': truthyValue,
   '2022-10-15': truthyValue,
 };
 
 const markedDays: MarkedDays = {
   '2022-10-12': {
-    dots: [
-      {
-        color: 'red',
-        selectedColor: 'green',
-      },
-      {
-        color: 'blue',
-        selectedColor: 'yellow',
-      },
-    ],
     theme: {
-      dayContentStyle: {
-        backgroundColor: 'green',
-        borderRadius: 8,
+      dayContainerStyle: {
+        backgroundColor: colors.brand.accent,
+        borderRadius: 40,
       },
       dayTextStyle: {
-        color: 'lightgrey',
+        color: colors.basic.inverse,
+      },
+    },
+  },
+  '2022-10-15': {
+    theme: {
+      dayContainerStyle: {
+        backgroundColor: colors.brand.accent,
+        borderRadius: 40,
+      },
+      dayTextStyle: {
+        color: colors.basic.inverse,
+      },
+    },
+  },
+  '2022-10-19': {
+    theme: {
+      dayContainerStyle: {
+        backgroundColor: colors.brand.accent,
+        borderRadius: 40,
+      },
+      dayTextStyle: {
+        color: colors.basic.inverse,
       },
     },
   },
@@ -88,7 +104,7 @@ const markedDays: MarkedDays = {
 
 const INITIAL_STATE = {
   startDate: new Date(2022, 9, 11),
-  endDate: new Date(2022, 9, 12),
+  endDate: new Date(2022, 9, 13),
   minDate: new Date(2022, 9, 6),
   maxDate: new Date(2022, 9, 20),
 };
@@ -101,25 +117,33 @@ const App = () => {
     INITIAL_STATE.endDate
   );
 
+  const [isRange, setIsRange] = useState(false);
+
   const handleChangeDate = useCallback(
     (date) => {
+      if (!isRange) {
+        setStartDate(date);
+        return;
+      }
+
       if (startDate) {
         if (endDate) {
           setStartDate(date);
           setEndDate(undefined);
-        } else if (date < startDate) {
+        } else if (date! < startDate) {
           setStartDate(date);
-        } else if (date > startDate) {
+          setEndDate(undefined);
+        } else if (date! > startDate) {
           setEndDate(date);
         } else {
           setStartDate(date);
-          setEndDate(date);
+          setEndDate(undefined);
         }
       } else {
         setStartDate(date);
       }
     },
-    [startDate, endDate]
+    [startDate, endDate, isRange]
   );
 
   return (
@@ -127,6 +151,8 @@ const App = () => {
       <View
         style={{
           paddingTop: StatusBar.currentHeight,
+          // alignItems: 'center',
+          // paddingHorizontal: 25,
         }}
       >
         <Month
@@ -139,8 +165,8 @@ const App = () => {
           firstDayMonday
           minDate={INITIAL_STATE.minDate}
           maxDate={INITIAL_STATE.maxDate}
-          markedDays={markedDays}
-          disableRange={false}
+          markedDays={!isRange && markedDays}
+          disableRange={!isRange}
           startDate={startDate}
           endDate={endDate}
           disabledDays={DISABLED_DAYS}

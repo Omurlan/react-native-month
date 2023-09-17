@@ -2,4 +2,10 @@
 .idea
 media
 example
+yarn.lock
+tsconfig.json
+renovate.json
+babel.config.js
+babel.js
+colors.ts
 __tests__
