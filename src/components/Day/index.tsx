@@ -70,6 +70,7 @@ const NonTouchableDay = React.memo<NonTouchableDayProps>(
           isActive ? dayTheme?.activeDayContainerStyle : {},
           isOutOfRange ? theme.dayOutOfRangeContainerStyle : {},
           isOutOfRange ? dayTheme?.dayOutOfRangeContainerStyle : {},
+          isMonthDate ? theme.nonTouchableLastMonthDayContainerStyle : {},
           isEndDate ? styles.endDate : {},
           isEndDate ? theme.endDateContainerStyle : {},
           isEndDate ? dayTheme?.endDateContainerStyle : {},

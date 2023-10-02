@@ -18,6 +18,7 @@ export interface DayTheme {
   nonTouchableDayContainerStyle?: ViewStyle;
   nonTouchableDayTextStyle?: TextStyle;
   nonTouchableLastMonthDayTextStyle?: TextStyle;
+  nonTouchableLastMonthDayContainerStyle?: ViewStyle;
   weekendContainerStyle?: ViewStyle;
   weekendContentStyle?: ViewStyle;
   weekendTextStyle?: TextStyle;
